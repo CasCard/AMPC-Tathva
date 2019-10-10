@@ -1,1 +1,10 @@
 https://www.google.com/maps/dir/'10.462682,76.040111'/'11.32074546,75.93459320'/
+
+New Format
+
+ String buf;
+     buf += F("http://maps.google.com/maps?saddr=My%20location&daddr=");
+     buf += String(latitude/1000000,7);
+     buf += F(",");
+     buf += String(longitude/1000000,7);
+     buf +=F("&mode=driving");
