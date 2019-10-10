@@ -119,7 +119,7 @@ void loop()
   
   mySerial.print("Latitude =");
   mySerial.println(LAT/1000000,8);
-  mySerial.print("longitude");
+  mySerial.print("longitude =");
 mySerial.println( LON/1000000 ,8);  // The SMS text you want to send
   delay(100);
   
