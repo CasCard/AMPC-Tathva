@@ -7,16 +7,16 @@ void gpsdump(TinyGPS &gps);
 bool feedgps();
 void getGPS();
 long lat, lon; 
-float LAT, LON;
+double LAT, LON;
  void setup1()
  {
   GPS.begin(9600);
   Serial.begin(9600);
   getGPS();
   Serial.print("Latitude : ");
-  Serial.print(LAT/1000000,8);
+  Serial.print(LAT/1000000,12);
   Serial.print(" :: Longitude : ");
-  Serial.println(LON/1000000,8);
+  Serial.println(LON/1000000,12);
 }
  void loop1()
  {
@@ -111,16 +111,24 @@ void loop()
 {
   mySerial.println("AT+CMGF=1");    //Sets the GSM Module in Text Mode
   delay(1000);  // Delay of 1000 milli seconds or 1 second
-  mySerial.println("AT+CMGS=\"+918970826586\"\r"); // Replace x with mobile number
+  mySerial.println("AT+CMGS=\"+919571420044\"\r"); // Replace x with mobile number
   delay(1000);
   GPS.begin(9600);
   Serial.begin(9600);
   getGPS();
-  
-  mySerial.print("Latitude =");
-  mySerial.println(LAT/1000000,8);
-  mySerial.print("longitude =");
-mySerial.println( LON/1000000 ,8);  // The SMS text you want to send
+ //https://www.google.com/maps/dir/'10.462682,76.040111'/'11.32074546,75.93459320'/ 
+  String buf;
+     buf += F("http://maps.google.com/maps?saddr=My%20location&daddr=");
+     buf += String(LAT/1000000,12);
+     buf += F(",");
+     buf += String(LON/1000000,12);
+     buf +=F("&mode=driving");
+     mySerial.print("Latitude =");
+     mySerial.println(LAT/1000000,12);
+     mySerial.print("longitude =");
+     mySerial.println( LON/1000000 ,12);
+     mySerial.println(buf);
+   // The SMS text you want to send
   delay(100);
   
    mySerial.println((char)26);// ASCII code of CTRL+Z
