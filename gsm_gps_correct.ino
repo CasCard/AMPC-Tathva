@@ -130,9 +130,54 @@ void loop()
      mySerial.println(buf);
    // The SMS text you want to send
   delay(100);
-  
    mySerial.println((char)26);// ASCII code of CTRL+Z
   delay(1000);
+************  
+  // Adding the HTTP Request For website upload
+Serial.println("AT+CGATT?");
+  delay(100);
+  Serial.println("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"");
+  delay(2000);
+  //NSP Settings
+  // Do Check Here ***********
+  Serial.println("AT+SAPBR=3,1,\"APN\",\"airtel\"");
+  delay(2000);
+  Serial.println("AT+SAPBR=1,1");
+  delay(2000);
+  Serial.println("AT+HTTPINIT");
+  delay(2000); 
+ // HTTP URL Posting    
+    String url;
+    url +=F("AT+HTTPPARA=\"URL\",\"http://www.datathon.ml/write.php?lat=");
+    url +=String(latitude/1000000,7);
+    url += F("&lon=");
+    url +=String(longitude/1000000,7);
+    url += F("&lin=");
+    url += F("http://maps.google.com/maps?");
+    url += String(latitude/1000000,7);
+    url += F(",");
+    url += String(longitude/1000000,7);
+    url +=F("&mode=driving\"");
+
+    Serial.println(url); 
+    delay(8000);
+    Serial.println("AT+HTTPACTION=0");
+    delay(7000);
+    // read server response
+    Serial.println("AT+HTTPREAD"); 
+    delay(2000);
+    Serial.println("");
+    Serial.println("AT+HTTPTERM");
+    delay(1000);
+    Serial.println("");
+    delay(10000);
+    Serial.println(url); 
+    delay(5000);
+    Serial.println("AT+HTTPACTION=0");
+    delay(6000);
+   
+    Serial.println("Server Upload Successful");  
+*********** 
 }
 
 
